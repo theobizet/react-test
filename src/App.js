@@ -1,6 +1,7 @@
 // App.js
 import React, { useState } from 'react';
 import './App.css';
+import { Navbar } from './components/NavBar';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -27,6 +28,7 @@ function App() {
 
   return (
     <div className="App">
+      <Navbar/>
       <h1>To-Do List</h1>
       <input
         type="text"
