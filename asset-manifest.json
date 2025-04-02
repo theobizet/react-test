@@ -1,20 +1,15 @@
 {
   "files": {
-    "main.css": "/react-test/static/css/main.217a3a57.css",
-    "main.js": "/react-test/static/js/main.706b7dea.js",
+    "main.css": "/react-test/static/css/main.79d19d76.css",
+    "main.js": "/react-test/static/js/main.76407502.js",
     "static/js/453.9a0edc82.chunk.js": "/react-test/static/js/453.9a0edc82.chunk.js",
-    "static/media/banner-bg.png": "/react-test/static/media/banner-bg.cc1273af450504afe755.png",
-    "static/media/CentraNo2-Bold.ttf": "/react-test/static/media/CentraNo2-Bold.2faff7f7d3fc92a2fcd9.ttf",
-    "static/media/CentraNo2-Medium.ttf": "/react-test/static/media/CentraNo2-Medium.f94be5b326d78bb32b95.ttf",
-    "static/media/CentraNo2-Book.ttf": "/react-test/static/media/CentraNo2-Book.2b143fa4b734a3584043.ttf",
-    "static/media/footer-bg.png": "/react-test/static/media/footer-bg.7bd67c0f73571d0acc02.png",
     "index.html": "/react-test/index.html",
-    "main.217a3a57.css.map": "/react-test/static/css/main.217a3a57.css.map",
-    "main.706b7dea.js.map": "/react-test/static/js/main.706b7dea.js.map",
+    "main.79d19d76.css.map": "/react-test/static/css/main.79d19d76.css.map",
+    "main.76407502.js.map": "/react-test/static/js/main.76407502.js.map",
     "453.9a0edc82.chunk.js.map": "/react-test/static/js/453.9a0edc82.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.217a3a57.css",
-    "static/js/main.706b7dea.js"
+    "static/css/main.79d19d76.css",
+    "static/js/main.76407502.js"
   ]
 }
