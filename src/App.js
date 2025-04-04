@@ -1,14 +1,16 @@
-// App.js
-import './App.css';
-import { CustomNavBar } from './components/CustomNavBar';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import GanttChart from './components/GanttChart';
 
-function App() {
-  return (
-    <div className="App">
-      <CustomNavBar />
-    </div>
-  );
-}
+const App = () => (
+  <div className="App">
+    <header className="bg-primary text-white text-center py-3">
+      <h1>Diagramme de Gantt</h1>
+    </header>
+    <main className="container mt-5">
+      <GanttChart />
+    </main>
+  </div>
+);
 
 export default App;
