@@ -76,33 +76,41 @@ export default function App() {
   };
 
   return (
-    <div className="p-4 space-y-4">
-      <h1 className="text-2xl font-bold">Projet Gantt</h1>
-      <TaskForm
-        form={form}
-        handleChange={handleChange}
-        addTask={addTask}
-        updateTask={updateTask}
-        editingTaskId={editingTaskId}
-        resetForm={resetForm}
-        error={error}
-      />
-      <div className="mt-2">
-        <label className="mr-2 font-semibold">Vue:</label>
-        <select
-          value={viewMode}
-          onChange={handleViewChange}
-          className="border p-2 rounded"
-          aria-label="Mode de vue"
-        >
-          <option value="Day">Jour</option>
-          <option value="Week">Semaine</option>
-          <option value="Month">Mois</option>
-        </select>
+    <div className="p-4">
+      <div className="flex flex-row space-y-4 space-x-4 items-center">
+        <div className="w-1/3">
+          <h2 className="text-xl font-bold">Liste des tâches</h2>
+          <TaskList tasks={tasks} editTask={editTask} deleteTask={deleteTask} />
+        </div>
+        <div className="w-2/3 flex flex-col">
+          <div className="flex justify-start items-center">
+            <label className="mr-2 font-semibold">Vue:</label>
+            <select
+              value={viewMode}
+              onChange={handleViewChange}
+              className="border p-2 rounded"
+              aria-label="Mode de vue"
+            >
+              <option value="Day">Jour</option>
+              <option value="Week">Semaine</option>
+              <option value="Month">Mois</option>
+            </select>
+          </div>
+          <GanttChart tasks={tasks} viewMode={viewMode} />
+        </div>
       </div>
-      <GanttChart tasks={tasks} viewMode={viewMode} />
-      <h2 className="text-xl font-bold mt-6">Liste des tâches</h2>
-      <TaskList tasks={tasks} editTask={editTask} deleteTask={deleteTask} />
+      <hr className="my-4"/>
+      <div className="w-full">
+        <TaskForm
+          form={form}
+          handleChange={handleChange}
+          addTask={addTask}
+          updateTask={updateTask}
+          editingTaskId={editingTaskId}
+          resetForm={resetForm}
+          error={error}
+        />
+      </div>
     </div>
   );
 }
