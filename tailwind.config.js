@@ -4,7 +4,17 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      scrollbar: {
+        hide: {
+          '::-webkit-scrollbar': {
+            display: 'none',
+          },
+          '-ms-overflow-style': 'none',  // IE and Edge
+          'scrollbar-width': 'none',    // Firefox
+        },
+      },
+    },
   },
   plugins: [],
 }

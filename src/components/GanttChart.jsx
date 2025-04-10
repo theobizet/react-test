@@ -22,10 +22,10 @@ const GanttChart = ({ tasks, viewMode }) => {
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-gray-800 mb-3 ml-3">Diagramme de Gantt</h2>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-3 ml-3 ">Diagramme de Gantt</h2>
       <div
         ref={ganttRef}
-        className="w-full overflow-auto rounded-lg shadow-lg bg-white"
+        className="w-full overflow-auto rounded-lg shadow-lg bg-white border-2 border-gray-200"
         aria-label="Diagramme de Gantt"
       />
     </div>

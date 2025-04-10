@@ -4,12 +4,12 @@ const TaskList = ({ tasks, editTask, deleteTask }) => (
   <div className="container mx-auto px-4">
     <h2 className="text-2xl font-semibold mb-3 text-gray-800">Liste des tâches</h2>
     
-    <div style={{ maxHeight: "calc(100vh - 88px - 44px - 16px)", overflowY: "auto" }}>
+    <div style={{ maxHeight: "calc(100vh - 88px - 44px - 16px)", overflowY: "auto" }} className="scrollbar-hide">
       <ul className="space-y-3">
         {tasks.map((task) => (
           <li
             key={task.id}
-            className="bg-white shadow-md rounded-xl p-4 flex items-center justify-between hover:shadow-lg transition duration-300"
+            className="bg-slate-200 shadow-md rounded-xl p-4 flex items-center justify-between hover:shadow-lg transition duration-300 border-2 border-gray-200"
           >
             <div className="flex flex-col p-2 text-sm text-gray-700">
               <span className="font-semibold text-base text-gray-900">{task.name}</span>
