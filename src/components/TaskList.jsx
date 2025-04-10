@@ -16,7 +16,7 @@ const TaskList = ({ tasks, editTask, deleteTask }) => (
               <span className="text-xs text-gray-500 mt-1">
                 {task.start} → {task.end}
               </span>
-              <div className="w-full mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div className="w-full mt-2 h-2 bg-gray-600 rounded-full overflow-hidden">
                 <div
                   className="bg-blue-500 h-full transition-all duration-300"
                   style={{ width: `${task.progress}%` }}
