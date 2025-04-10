@@ -2,21 +2,70 @@ import React, { useState, useEffect } from "react";
 import GanttChart from "./components/GanttChart";
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
-import { validateForm, checkForOverlaps } from "./components/utils";
+import useTasks from "./hooks/useTasks";
 
 const initialTasks = [
   {
     id: "Task 1",
-    name: "Initial task",
-    start: "2025-04-08",
-    end: "2025-04-12",
-    progress: 20,
+    name: "Planification",
+    start: "2025-04-01",
+    end: "2025-04-05",
+    progress: 100,
     dependencies: "",
+  },
+  {
+    id: "Task 2",
+    name: "Conception UI/UX",
+    start: "2025-04-06",
+    end: "2025-04-10",
+    progress: 80,
+    dependencies: "Task 1",
+  },
+  {
+    id: "Task 3",
+    name: "Développement Frontend",
+    start: "2025-04-11",
+    end: "2025-04-18",
+    progress: 40,
+    dependencies: "Task 2",
+  },
+  {
+    id: "Task 4",
+    name: "Développement Backend",
+    start: "2025-04-11",
+    end: "2025-04-20",
+    progress: 20,
+    dependencies: "Task 2",
+  },
+  {
+    id: "Task 5",
+    name: "Intégration",
+    start: "2025-04-21",
+    end: "2025-04-25",
+    progress: 0,
+    dependencies: "Task 3,Task 4",
+  },
+  {
+    id: "Task 6",
+    name: "Tests",
+    start: "2025-04-26",
+    end: "2025-04-29",
+    progress: 0,
+    dependencies: "Task 5",
+  },
+  {
+    id: "Task 7",
+    name: "Déploiement",
+    start: "2025-04-30",
+    end: "2025-05-01",
+    progress: 0,
+    dependencies: "Task 6",
   },
 ];
 
+
 export default function App() {
-  const [tasks, setTasks] = useState(initialTasks);
+  const { tasks, addTask, updateTask, deleteTask } = useTasks(initialTasks);
   const [isOpen, setIsOpen] = useState(false);
   const [viewMode, setViewMode] = useState(() => {
     return localStorage.getItem("viewMode") || "Day";
@@ -33,7 +82,7 @@ export default function App() {
 
   useEffect(() => {
     if (isOpen) {
-      setError(""); // Clear any previous errors when the form opens
+      setError("");
     }
   }, [isOpen]);
 
@@ -44,46 +93,16 @@ export default function App() {
 
   const handleSubmit = () => {
     if (editingTaskId) {
-      updateTask();
+      updateTask(form, setError, editingTaskId, resetForm);
     } else {
-      addTask();
+      addTask(form, setError, resetForm);
     }
-  };
-
-  const addTask = () => {
-    if (!validateForm(form, tasks, setError)) return;
-    const id = `Task ${Date.now()}`;
-    const newTask = { ...form, id, progress: parseInt(form.progress, 10) };
-    setTasks((prevTasks) => [...prevTasks, newTask]);
-    resetForm();
   };
 
   const editTask = (task) => {
     setForm(task);
     setEditingTaskId(task.id);
     setIsOpen(true);
-  };
-
-  const updateTask = () => {
-    if (!validateForm(form, tasks, setError)) return;
-
-    // Check for overlaps with other tasks
-    const otherTasks = tasks.filter((t) => t.id !== editingTaskId);
-    if (checkForOverlaps(form, otherTasks)) {
-      setError("La nouvelle tâche chevauche une tâche existante.");
-      return;
-    }
-
-    const updated = tasks.map((t) =>
-      t.id === editingTaskId ? { ...form, id: editingTaskId, progress: parseInt(form.progress, 10) } : t
-    );
-    setTasks(updated);
-    resetForm();
-  };
-
-  const deleteTask = (id) => {
-    setTasks((prevTasks) => prevTasks.filter((t) => t.id !== id));
-    if (editingTaskId === id) resetForm();
   };
 
   const resetForm = () => {
@@ -114,9 +133,9 @@ export default function App() {
           </div>
         </div>
       </nav>
-      <div className="p-4">
+      <div>
         <div className="container flex mx-auto items-start space-x-4">
-          <TaskList tasks={tasks} editTask={editTask} deleteTask={deleteTask} className="w-2/5 h-full flex flex-col grow"/>
+          <TaskList tasks={tasks} editTask={editTask} deleteTask={deleteTask} className="w-2/5 h-full flex flex-col grow overflow-scroll"/>
           <div className="w-3/5 flex flex-col grow space-y-2">
             <GanttChart tasks={tasks} viewMode={viewMode} />
             <div className="flex justify-start items-center">
@@ -124,12 +143,13 @@ export default function App() {
               <select
                 value={viewMode}
                 onChange={handleViewChange}
-                className="border p-2 rounded"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 aria-label="Mode de vue"
               >
                 <option value="Day">Jour</option>
                 <option value="Week">Semaine</option>
                 <option value="Month">Mois</option>
+                <option value="Year">Année</option>
               </select>
             </div>
           </div>
