@@ -1,36 +1,84 @@
-import { useState } from "react";
-import { validateForm, checkForOverlaps } from "../utils/utils";
+import { useEffect, useState } from "react";
 
-const useTasks = (initialTasks) => {
-  const [tasks, setTasks] = useState(initialTasks);
+const API_URL = "http://localhost:4000/tasks";
 
-  const addTask = (form, setError, resetForm) => {
-    if (!validateForm(form, tasks, setError)) return;
+const useTasks = () => {
+  const [tasks, setTasks] = useState([]);
 
-    const id = `Task ${Date.now()}`;
-    const newTask = { ...form, id, progress: parseInt(form.progress, 10) };
-    setTasks((prevTasks) => [...prevTasks, newTask]);
-    resetForm();
-  };
+  // 🔄 Chargement initial depuis l'API
+  useEffect(() => {
+    fetch(API_URL)
+      .then((res) => res.json())
+      .then((data) => setTasks(data))
+      .catch((err) => console.error("Erreur chargement des tâches :", err));
+  }, []);
 
-  const updateTask = (form, setError, editingTaskId, resetForm) => {
-    if (!validateForm(form, tasks, setError)) return;
-
-    const otherTasks = tasks.filter((t) => t.id !== editingTaskId);
-    if (checkForOverlaps(form, otherTasks)) {
-      setError("La nouvelle tâche chevauche une tâche existante.");
-      return;
+  // ➕ Ajouter une tâche
+  const addTask = async (form, setError, resetForm) => {
+    if (!form.name || !form.start || !form.end) {
+      return setError("Veuillez remplir tous les champs obligatoires.");
     }
 
-    const updated = tasks.map((t) =>
-      t.id === editingTaskId ? { ...form, id: editingTaskId, progress: parseInt(form.progress, 10) } : t
-    );
-    setTasks(updated);
-    resetForm();
+    const newTask = {
+      id: `Task ${Date.now()}`,
+      ...form,
+    };
+
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newTask),
+      });
+
+      if (!res.ok) throw new Error();
+
+      const created = await res.json();
+      setTasks((prev) => [...prev, created]);
+      resetForm();
+    } catch (error) {
+      setError("Erreur lors de l'ajout de la tâche.");
+    }
   };
 
-  const deleteTask = (id) => {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+  // ✏️ Modifier une tâche
+  const updateTask = async (form, setError, taskId, resetForm) => {
+    try {
+      const res = await fetch(`${API_URL}/${taskId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) throw new Error();
+
+      const updated = await res.json();
+      setTasks((prev) =>
+        prev.map((t) => (t.id === taskId ? updated.task : t))
+      );
+      resetForm();
+    } catch (error) {
+      setError("Erreur lors de la mise à jour de la tâche.");
+    }
+  };
+
+  // ❌ Supprimer une tâche
+  const deleteTask = async (taskId) => {
+    try {
+      const res = await fetch(`${API_URL}/${taskId}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) throw new Error();
+
+      setTasks((prev) => prev.filter((t) => t.id !== taskId));
+    } catch (error) {
+      console.error("Erreur lors de la suppression.");
+    }
   };
 
   return { tasks, addTask, updateTask, deleteTask };
