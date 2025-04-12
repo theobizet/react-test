@@ -35,10 +35,10 @@ Le projet [react-test](https://github.com/theobizet/react-test) est une applicat
 
 ### Scripts disponibles
 
- `npm run start` : Lance l'application en mode développement sur [http://localhost:3000].
- `npm run test` : Exécute les tests en mode interactif.
- `npm run build` : Compile l'application pour la production dans le dossier `build`.
- `npm run eject` : Éjecte la configuration Create React App (opération irréversible).
+ - `npm run start` : Lance l'application en mode développement sur [http://localhost:3000].
+ - `npm run test` : Exécute les tests en mode interactif.
+ - `npm run build` : Compile l'application pour la production dans le dossier `build`.
+ - `npm run eject` : Éjecte la configuration Create React App (opération irréversible).
 
 ---
 
