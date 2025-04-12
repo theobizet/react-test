@@ -52,7 +52,7 @@ Le projet [react-test](https://github.com/theobizet/react-test) est une applicat
 ---
 
 ## 📦 Dépendances principales
-- Ract
+- React
 - TailwindCSS
 - Node.js (pour le serveur backend)
 
