@@ -34,14 +34,6 @@ const GanttChart = ({ tasks }) => {
     ganttInstance.current = new Gantt(ganttRef.current, tasks, {
       view_mode: viewMode,
       date_format: "DD-MM-YYYY",
-      custom_popup_html: (task) => `
-        <div class="p-2 text-sm overflow-clip z-auto">
-          <h5 class="font-semibold text-gray-800">${task.name}</h5>
-          <p><strong>Début:</strong> ${task.start}</p>
-          <p><strong>Fin:</strong> ${task.end}</p>
-          <p><strong>Progression:</strong> ${task.progress}%</p>
-        </div>
-      `,
       on_click: (task) => {
         console.log("Tâche cliquée :", task);
       },
@@ -78,7 +70,7 @@ const GanttChart = ({ tasks }) => {
 
       <div
         ref={ganttRef}
-        className="w-full overflow-auto rounded-lg shadow-lg bg-white border-2 border-gray-200"
+        className="w-full h-hull grow overflow-auto rounded-lg shadow-lg bg-white border-2 border-gray-200"
         aria-label="Diagramme de Gantt"
       />
     </div>
